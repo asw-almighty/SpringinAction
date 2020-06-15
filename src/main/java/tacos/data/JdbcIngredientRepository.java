@@ -31,8 +31,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
     @Override
     public tacos.Ingredient findById(String id) {
         return jdbc.queryForObject(
-                "select id, name, type for Ingredient where id=?", this::mapRowToIngredient, id);
-
+                "select id, name, type from Ingredient where id=?", this::mapRowToIngredient, id);
     }
 
     //Spring의 RowMapper 인터페이스를 구현
@@ -44,4 +43,17 @@ public class JdbcIngredientRepository implements IngredientRepository {
                 Ingredient.Type.valueOf(rs.getString("type"))
         );
     }
+
+    @Override
+    public Ingredient save(Ingredient ingredient){
+        jdbc.update(
+                "INSERT INTO Ingredient (id, name, type) VALUES (?, ?, ?)",
+                ingredient.getId(),
+                ingredient.getName(),
+                ingredient.getType().toString()
+        );
+        return ingredient;
+
+    }
+
 }

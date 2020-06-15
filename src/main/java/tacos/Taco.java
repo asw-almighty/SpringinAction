@@ -18,5 +18,5 @@ public class Taco {
 
     @NotNull
     @Size(min=1, message="at Least 1 ingredients")
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
 }
