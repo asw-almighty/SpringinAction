@@ -17,24 +17,24 @@ public class Order {
     private Date placedAt;
 
     @NotBlank(message="required")
-    private String name;
+    private String deliveryName;
 
     @NotBlank(message="required")
-    private String street;
+    private String deliveryStreet;
 
     @NotBlank(message="required")
-    private String city;
+    private String deliveryCity;
 
     @NotBlank(message="required")
-    private String state;
+    private String deliveryState;
 
     @NotBlank(message="required")
-    private String zip;
+    private String deliveryZip;
 
     @CreditCardNumber(message="InValid Number")
     private String ccNumber;
 
-    @Pattern(regexp="^([1-9]|1[0-2])([\\/])([1-9][0-9])$", message="must be formmated MM/YY")
+    @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$", message="must be formmated MM/YY")
     private String ccExpiration;
 
     @Digits(integer=3,fraction=0,message="InValid CVV")

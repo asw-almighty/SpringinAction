@@ -16,7 +16,6 @@ public class Taco {
     @Size(min=5, message="at Least 5 characters long")
     private String name;
 
-    @NotNull
     @Size(min=1, message="at Least 1 ingredients")
     private List<Ingredient> ingredients;
 }
