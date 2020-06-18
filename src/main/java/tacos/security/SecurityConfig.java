@@ -29,23 +29,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //사용자 인증 정보를 구성하는 메서드
+    //ldap는 사용자가 직접 ldap 서버에서 인증받도록 하는 것.
+    //ldap 디렉토리에 입력된 비밀번호를 전송 후, 사용자의 비밀번호 속성 값(userPassword)과 비교하도록 ldap 서버에 요청.
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*
-         * 사용자 정보를 찾을 때, 스프링 시큐리티의 내부 코드에서는 기본적으로 다음 쿼리를 수행한다.
-         * select username,password,enabled from users where username=? 사용자의 이름, 비밀번호, 활성화 여부 검색(사용자 인증에 사용)
-         * select username,authority from authorities where username=? 해당 사용자에게 부여된 권한 검색
-         * select g.id, g.group_name, ga.authority from authorities g, group_members gm, group_authorities ga
-         *       where gm.username=? and g.id=ga.group_id and g.id=gm.group_id 해당 사용자가 속한 그룹과 권한 그룹 검색
-         */
+        System.out.println(new BCryptPasswordEncoder().encode("password1"));
         auth
-            .jdbcAuthentication()
-            .dataSource(dataSource) //data를 액세스하는 방법을 알려주는 코드, schema.sql과 data.sql을 확인하자.
-//          users 테이블이 아닌 다른 테이블을 사용할 때! custom sql을 사용한다.
-//          .usersByUserNameQuery("select username,password,enabled from **mans where username=?")
-//          .authoritiesByUsernameQuery("select username,authority from **auths where username=?");
-//          .passwordEncoder(new BCryptPasswordEncoder());
-            .passwordEncoder(new NoEncodingPasswordEncoder());
+                .ldapAuthentication()
+                .userSearchBase("ou=people") //사용자를 찾기 위한 기준점 쿼리를 제공한다. 여기서는 people 구성 단위부터 검색이 시작.
+                .userSearchFilter("(uid={0})")
+                .groupSearchBase("ou=groups")
+                .groupSearchFilter("member={0}")
+//                .contextSource().url("ldap://tacocloud.com:389/dc=tacocloud,dc=com")//외부 ldap 서버의 위치 지정
+                .contextSource() //내장 ldap 서버 설정
+                .root("dc=tacocloud,dc=com")
+                .ldif("classpath:users.ldif") //ldif 파일을 찾을 수 있는 경로 지정
+            .and()
+                .passwordCompare()
+                .passwordEncoder(new BCryptPasswordEncoder())
+                .passwordAttribute("userPasscode"); // 사용자의 비밀번호 속성 값이 userPassword가 아닐 경우!
+
     }
 
 
