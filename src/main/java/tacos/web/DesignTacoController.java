@@ -43,7 +43,6 @@ public class DesignTacoController {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
         model.addAttribute("taco", new Taco());
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+model);
         return "design";
     }
 
@@ -59,7 +58,6 @@ public class DesignTacoController {
 
     @PostMapping
     public String processDesign(@Valid Taco design, Errors errors, @ModelAttribute Order order){
-        System.out.println("design post: "+errors);
         if(errors.hasErrors()){
             return "design";
         }
