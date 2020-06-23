@@ -36,8 +36,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/design", "/orders").access("hasRole('ROLE_USER')")
                 .antMatchers("/", "/**").access("permitAll")
-                .and()
-                .httpBasic();
+            .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticate")
+            .and()
+                .logout()
+                    .logoutSuccessUrl("/")
+            .and()
+                .csrf();
+
     }
 
     //사용자 인증 정보를 구성하는 메서드
