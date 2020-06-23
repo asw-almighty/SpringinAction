@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SpringinAction.iml" filepath="$PROJECT_DIR$/SpringinAction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/taco-cloud.iml" filepath="$PROJECT_DIR$/taco-cloud.iml" />
     </modules>
   </component>
 </project>
