@@ -1,6 +1,7 @@
 package tacos;
 
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Taco {
+public class Taco extends RepresentationModel<Taco> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
