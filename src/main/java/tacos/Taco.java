@@ -1,6 +1,7 @@
 package tacos;
 
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @Entity
+@RestResource(rel="tacos", path="tacos")
 public class Taco extends RepresentationModel<Taco> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -21,7 +21,7 @@ public class TacoResource extends RepresentationModel<Taco> {
 
     private static final IngredientResourceAssembler ingredientAssembler = new IngredientResourceAssembler();
 
-    public TacoResource(Taco taco){
+    public TacoResource(Taco taco) {
         this.name = taco.getName();
         this.createdAt = taco.getCreatedAt();
         this.ingredients = ingredientAssembler.toCollectionModel(taco.getIngredients());
